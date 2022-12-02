@@ -13,7 +13,11 @@ const App = () => {
             <h1>Give Feedback</h1>
             <Buttons {...{ setGood, setNeutral, setBad }} />
             <h2>Stats</h2>
-            <Stats {...{ good, bad, neutral }} />
+            {Boolean(good + neutral + bad) ? (
+                <Stats {...{ good, bad, neutral }} />
+            ) : (
+                <p>No feedback.</p>
+            )}
         </div>
     );
 };
