@@ -1,50 +1,31 @@
 # FullStackOpen Part 0
 
--   [Exercise 0.4 - New note diagram](#04)
+- [FullStackOpen Part 0](#fullstackopen-part-0)
+  - [ Exercise 0.4 - New note diagram](#-exercise-04---new-note-diagram)
+  - [ Exercise 0.5 - Single page app diagram](#-exercise-05---single-page-app-diagram)
 
 ---
 
 ## <a name="04"></a> Exercise 0.4 - New note diagram
 
 ```
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
-server-->browser: HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server-->browser: main.css
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
-server-->browser: main.js
+note over browser: user enters a note and clicks submit button
 
-note over browser:
-browser starts executing js-code
-that requests JSON data from server
-end note
+browser->>server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
 
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+note right of browser: {"note": "an awesome note"}
 
-note over browser:
-browser executes the event handler
-that renders notes to display
-end note
-note over browser:
-user enters a note and
-clicks submit button
-end note
+note over server: server saves the note with current datetime
 
-browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
-note right of browser:
-{"note": "an awesome note"}
-end note
+server-->>browser: HTTP 302 https://studies.cs.helsinki.fi/exampleapp/notes
 
-note over server:
-server saves the note with
-current datetime
-end note
-
-server-->browser: HTTP 302 https://studies.cs.helsinki.fi/exampleapp/notes
-
-note over browser, server:
-page starts loading again
+browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->>browser: HTML-code
+browser->server: ...(rest of the page loading requests/responses)...
 ```
 
-[![](https://mermaid.ink/img/pako:eNqtVEtv2kAQ_iujPYMB05DAIadGraq2iURudVUN3rG9wd51d9cQhPzfO2sMUSVoFYkLMjOj7zGP3YvUSBIL4eh3Qzqljwpzi1WiV9ZsHdnh_T3_bsgu4PPz8xN8eniGwvvaLUYj5xupyEWpiwoqndJrFWVqRK9Y1SVhXY-08eQSfUAYMlaPGsC-fR0G7isxVag0p8-TvSWvx_XyD6qQS3QwD4YL4JTtP8B5tN4BvVLaeKVzeHFdM8AX6MGGWTjOf1k-fgeJHiGzpoIDHQTsq_gIyKzV6LNOfuwhNdqT9gtIRJgXKJaMbpeIQVBFIR6PJ_Ph-GYYTxMB7QCiKPr5H_MH1-TYLAFtmAAK1LLkVG9fS7IOuuUBb0AqV5e4uwDLjBcyTcfGFhgMOzhgHkhLla4duGZVKQ-rxvvQgYs9fXpcvmvlafsrUJ00WZUXHkz2pmufiK5ChAaiBtySMxXBIdj-7eaopR--w03fua5kq3wBaWNt6GKYiVdVR3325NjNdBy__37PdHdwElZjTseFLg3KsM6Y8xmIgajI8kFIfl_2iQZ2y8Kr3rhEu05Eoluuw8ab5U6nYuFtQwPR1MFL_xaJRYalO0UfpPLGnoKBkvjvXvhdHV6yXDnPkLy7mcpDvLElh4-mQzrKuW3NKkpNNXJKFqy92Mxno1k8u8N4SrPbKd5MpzJdTeZ3Wfxhksnb8SRG0bbtHycH3BU?type=png)](https://mermaid.live/edit#pako:eNqtVEtv2kAQ_iujPYMB05DAIadGraq2iURudVUN3rG9wd51d9cQhPzfO2sMUSVoFYkLMjOj7zGP3YvUSBIL4eh3Qzqljwpzi1WiV9ZsHdnh_T3_bsgu4PPz8xN8eniGwvvaLUYj5xupyEWpiwoqndJrFWVqRK9Y1SVhXY-08eQSfUAYMlaPGsC-fR0G7isxVag0p8-TvSWvx_XyD6qQS3QwD4YL4JTtP8B5tN4BvVLaeKVzeHFdM8AX6MGGWTjOf1k-fgeJHiGzpoIDHQTsq_gIyKzV6LNOfuwhNdqT9gtIRJgXKJaMbpeIQVBFIR6PJ_Ph-GYYTxMB7QCiKPr5H_MH1-TYLAFtmAAK1LLkVG9fS7IOuuUBb0AqV5e4uwDLjBcyTcfGFhgMOzhgHkhLla4duGZVKQ-rxvvQgYs9fXpcvmvlafsrUJ00WZUXHkz2pmufiK5ChAaiBtySMxXBIdj-7eaopR--w03fua5kq3wBaWNt6GKYiVdVR3325NjNdBy__37PdHdwElZjTseFLg3KsM6Y8xmIgajI8kFIfl_2iQZ2y8Kr3rhEu05Eoluuw8ab5U6nYuFtQwPR1MFL_xaJRYalO0UfpPLGnoKBkvjvXvhdHV6yXDnPkLy7mcpDvLElh4-mQzrKuW3NKkpNNXJKFqy92Mxno1k8u8N4SrPbKd5MpzJdTeZ3Wfxhksnb8SRG0bbtHycH3BU)
+[![](https://mermaid.ink/img/pako:eNqVUk1r3DAQ_SuDTi1k7azdbhIfcmpoDy0NZI-GMpbGtlhbcjXSbsPi_17J-9EeSiEYZDx-8968pzkKaRWJSjD9DGQkfdLYORxrY6wnsHty0Dh7YHIVhHgCGU-OAWEBoFEgBy13DByaUXtogvfW1PE5960eH-O5TwRftttneP7-soXe-4mrPGcflCbOJGc9DazNTmetzukXjtNAOE25ocOPJJUYF0mnu96Dbf_MdazFghAV1AIN4IHYjgSn4nztXNxcZjm9gXFPDL4_oeGgfQ8yOBdtgkJPXo-L9Am-imausoub8rZ4i5mowf_J5vPT9u1s_xzt29dVutm_lC5CWZa9c8RLhMn3hB3BYFFp04FLa8Ce84iYbKTm9xEvbsRIbkSt4qYcawMx59g6niNX6Ha1qM0ccRi8fXk1UlTeBboRYUopnrdKVC0OfK0-Ke2tuxbTDBQ_j8K_TmknO80-UkprWt2lenBDLF8CSr-zLl5YaDJpx5y16tH5fv-wyTfF5h6LkjZ3JX4sSyWb9cN9W3xYt-rudl2gmOf5N6S5D7g?type=png)](https://mermaid.live/edit#pako:eNqVUk1r3DAQ_SuDTi1k7azdbhIfcmpoDy0NZI-GMpbGtlhbcjXSbsPi_17J-9EeSiEYZDx-8968pzkKaRWJSjD9DGQkfdLYORxrY6wnsHty0Dh7YHIVhHgCGU-OAWEBoFEgBy13DByaUXtogvfW1PE5960eH-O5TwRftttneP7-soXe-4mrPGcflCbOJGc9DazNTmetzukXjtNAOE25ocOPJJUYF0mnu96Dbf_MdazFghAV1AIN4IHYjgSn4nztXNxcZjm9gXFPDL4_oeGgfQ8yOBdtgkJPXo-L9Am-imausoub8rZ4i5mowf_J5vPT9u1s_xzt29dVutm_lC5CWZa9c8RLhMn3hB3BYFFp04FLa8Ce84iYbKTm9xEvbsRIbkSt4qYcawMx59g6niNX6Ha1qM0ccRi8fXk1UlTeBboRYUopnrdKVC0OfK0-Ke2tuxbTDBQ_j8K_TmknO80-UkprWt2lenBDLF8CSr-zLl5YaDJpx5y16tH5fv-wyTfF5h6LkjZ3JX4sSyWb9cN9W3xYt-rudl2gmOf5N6S5D7g)
+
+---
+
+## <a name="05"></a> Exercise 0.5 - Single page app diagram
