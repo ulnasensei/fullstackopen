@@ -16,12 +16,19 @@ const App = () => {
     const pointsCopy = [...points];
     const [selected, setSelected] = useState(0);
 
+    const indexHighestVote = points.indexOf(Math.max(...points));
+
     return (
         <div>
+            <h1>Anectode of the day</h1>
             <p>{anecdotes[selected]}</p>
             <p>has {points[selected]} votes.</p>
             <AnectodeButton length={anecdotes.length} setSelected={setSelected} />
             <VoteButton {...{ selected, pointsCopy, setPoints }} />
+
+            <h1>Highest Voted Anectode</h1>
+            <p>{anecdotes[indexHighestVote]}</p>
+            <p>has {points[indexHighestVote]} votes.</p>
         </div>
     );
 };
