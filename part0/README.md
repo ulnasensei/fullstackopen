@@ -1,6 +1,10 @@
 # FullStackOpen Part 0
 
-## Exercise 0.4 - New note diagram
+-   [Exercise 0.4](#04)
+
+---
+
+## <a name="04"></a> Exercise 0.4 - New note diagram
 
 ```yaml
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
