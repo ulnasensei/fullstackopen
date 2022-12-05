@@ -1,5 +1,8 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import CountryDetails from "./components/CountryDetails";
+import ToggleItem from "./components/ToggleItem";
 const App = () => {
     const [countries, setCountries] = useState([]);
     const [search, setSearch] = useState("");
@@ -27,33 +30,14 @@ const App = () => {
         const len = searchResults.length;
         if (len > 0) {
             if (len === 1) {
-                const {
-                    name: { common: name },
-                    capital: { 0: capital },
-                    area,
-                    languages,
-                    flags: { png: flag },
-                } = searchResults[0];
-                return (
-                    <div>
-                        <h1>{name}</h1>
-                        <p>Capital: {capital}</p>
-                        <p>Area: {area}</p>
-                        <p>
-                            <strong>Languages:</strong>
-                        </p>
-                        <ul>
-                            {Object.keys(languages).map((lang) => (
-                                <li key={lang}>{languages[lang]}</li>
-                            ))}
-                        </ul>
-                        <img src={flag} alt="flag" />
-                    </div>
-                );
+                return <CountryDetails country={searchResults[0]} />;
             }
             if (len <= 10) {
                 return searchResults.map((country) => (
-                    <p key={country.cca3}>{country.name.common}</p>
+                    <React.Fragment key={country.cca3}>
+                        <span>{country.name.common}</span>
+                        <ToggleItem country={country} /> <br />
+                    </React.Fragment>
                 ));
             }
             return <p>Too many matches. Please be more specific.</p>;
