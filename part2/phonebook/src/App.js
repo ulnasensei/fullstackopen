@@ -1,19 +1,25 @@
 import { useState } from "react";
 
 const App = () => {
-    const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+    const [persons, setPersons] = useState([{ name: "Arto Hellas", phone: "123889" }]);
     const [newName, setNewName] = useState("");
+    const [newPhone, setNewPhone] = useState("");
 
     const addPerson = (event) => {
         event.preventDefault();
-        persons.filter((person) => newName === person.name)
+        Boolean(persons.filter((person) => newName === person.name).length)
             ? alert(`${newName} is already added to the Phonebook.`)
-            : setPersons(persons.concat({ name: newName }));
+            : setPersons(persons.concat({ name: newName, phone: newPhone }));
         setNewName("");
+        setNewPhone("");
     };
-    const handleChange = (event) => {
+    const handleNameChange = (event) => {
         event.preventDefault();
         setNewName(event.target.value);
+    };
+    const handlePhoneChange = (event) => {
+        event.preventDefault();
+        setNewPhone(event.target.value);
     };
 
     return (
@@ -26,7 +32,17 @@ const App = () => {
                         type={"text"}
                         name="name"
                         value={newName}
-                        onChange={handleChange}
+                        onChange={handleNameChange}
+                        required
+                    />
+                </div>
+                <div>
+                    phone:&nbsp;
+                    <input
+                        type="text"
+                        name="phone"
+                        value={newPhone}
+                        onChange={handlePhoneChange}
                         required
                     />
                 </div>
@@ -36,7 +52,9 @@ const App = () => {
             </form>
             <h2>Numbers</h2>
             {persons.map((person) => (
-                <p key={person.name}>{person.name}</p>
+                <p key={person.name}>
+                    {person.name} - {person.phone}
+                </p>
             ))}
         </div>
     );
