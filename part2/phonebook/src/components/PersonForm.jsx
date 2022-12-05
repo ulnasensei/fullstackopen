@@ -3,7 +3,9 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newPhone, setNew
         event.preventDefault();
         Boolean(persons.filter((person) => newName === person.name).length)
             ? alert(`${newName} is already added to the Phonebook.`)
-            : setPersons(persons.concat({ name: newName, phone: newPhone }));
+            : setPersons(
+                  persons.concat({ name: newName, number: newPhone, id: persons.length + 1 })
+              );
         setNewName("");
         setNewPhone("");
     };

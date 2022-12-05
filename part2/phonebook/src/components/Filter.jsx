@@ -16,7 +16,7 @@ const Filter = ({ persons, setSearch, search, searchResults, setSearchResults })
                 <br />
                 {searchResults.map((result) => (
                     <p key={result.name}>
-                        {result.name} - {result.phone}
+                        {result.name} - {result.number}
                     </p>
                 ))}
             </>
