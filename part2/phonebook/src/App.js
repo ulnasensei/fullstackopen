@@ -4,6 +4,8 @@ const App = () => {
     const [persons, setPersons] = useState([{ name: "Arto Hellas", phone: "123889" }]);
     const [newName, setNewName] = useState("");
     const [newPhone, setNewPhone] = useState("");
+    const [search, setSearch] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     const addPerson = (event) => {
         event.preventDefault();
@@ -21,10 +23,38 @@ const App = () => {
         event.preventDefault();
         setNewPhone(event.target.value);
     };
+    const handleSearch = (event) => {
+        setSearch(() => event.target.value);
+        event.target.value === ""
+            ? setSearchResults([])
+            : setSearchResults(
+                  persons.filter(
+                      (person) =>
+                          ~person.name.toLowerCase().indexOf(event.target.value.toLowerCase())
+                  )
+              );
+    };
+    const showSearchResults = () => {
+        return (
+            <>
+                <br />
+                {searchResults.map((result) => (
+                    <p key={result.name}>
+                        {result.name} - {result.phone}
+                    </p>
+                ))}
+            </>
+        );
+    };
 
     return (
         <div>
             <h2>Phonebook</h2>
+            <div>
+                <input type="text" value={search} onChange={handleSearch} />
+                {Boolean(searchResults.length) && showSearchResults()}
+            </div>
+            <h2>add a new contact</h2>
             <form onSubmit={addPerson}>
                 <div>
                     name:{" "}
