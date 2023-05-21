@@ -1,5 +1,5 @@
 import personService from "../services/personService";
-const Persons = ({ persons, setPersons }) => {
+const Persons = ({ persons, setPersons, setNotificationStatus }) => {
   const handleDelete = (event, person) => {
     const { name, id } = person;
     if (window.confirm(`Delete ${name}?`)) {
@@ -7,12 +7,23 @@ const Persons = ({ persons, setPersons }) => {
         .deletePerson(id)
         .then((response) => {
           console.log(response);
+          setNotificationStatus({
+            message: `Deleted ${name}.`,
+            type: "SUCCESS",
+          });
+          setTimeout(() => {
+            setNotificationStatus({ message: null, type: null });
+          }, 5000);
         })
         .catch((error) => {
           console.log(error);
-          alert(
-            `The person ${person.name} was already deleted from the server!`
-          );
+          setNotificationStatus({
+            message: `The person ${person.name} was already deleted from the server!`,
+            type: "ERROR",
+          });
+          setTimeout(() => {
+            setNotificationStatus({ message: null, type: null });
+          }, 5000);
         })
         .finally(() => {
           personService.getAll().then((data) => {

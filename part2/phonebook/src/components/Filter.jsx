@@ -24,7 +24,8 @@ const Filter = ({ persons, setSearch, search, searchResults, setSearchResults })
     };
     return (
         <div>
-            <input type="text" value={search} onChange={handleSearch} />
+            <label htmlFor="search">Search:&nbsp;</label>
+            <input id="search" type="text" value={search} onChange={handleSearch} />
             {Boolean(searchResults.length) && showSearchResults()}
         </div>
     );

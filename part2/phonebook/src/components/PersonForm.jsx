@@ -7,6 +7,7 @@ const PersonForm = ({
   setNewName,
   newPhone,
   setNewPhone,
+  setNotificationStatus,
 }) => {
   const addPerson = (event) => {
     event.preventDefault();
@@ -20,8 +21,26 @@ const PersonForm = ({
       ) {
         personService
           .updatePerson(existingPerson.id, { name: newName, number: newPhone })
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error))
+          .then((response) => {
+            console.log(response);
+            setNotificationStatus({
+              message: `Updated ${newName}.`,
+              type: "SUCCESS",
+            });
+            setTimeout(() => {
+              setNotificationStatus({ message: null, type: null });
+            }, 5000);
+          })
+          .catch((error) => {
+            console.log(error);
+            setNotificationStatus({
+              message: `Update failed. ${error.message}`,
+              type: "ERROR",
+            });
+            setTimeout(() => {
+              setNotificationStatus({ message: null, type: null });
+            }, 5000);
+          })
           .finally(() =>
             personService.getAll().then((data) => setPersons(data))
           );
@@ -35,8 +54,26 @@ const PersonForm = ({
     };
     personService
       .createPerson(person)
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error))
+      .then((data) => {
+        console.log(data);
+        setNotificationStatus({
+          message: `Added ${newName}.`,
+          type: "SUCCESS",
+        });
+        setTimeout(() => {
+          setNotificationStatus({ message: null, type: null });
+        }, 5000);
+      })
+      .catch((error) => {
+        console.log(error);
+        setNotificationStatus({
+          message: error.message,
+          type: "ERROR",
+        });
+        setTimeout(() => {
+          setNotificationStatus({ message: null, type: null });
+        }, 5000);
+      })
       .finally(() => {
         personService.getAll().then((data) => setPersons(data));
       });
