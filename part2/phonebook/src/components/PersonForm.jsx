@@ -1,4 +1,4 @@
-import axios from "axios";
+import personService from "../services/personService";
 
 const PersonForm = ({
   persons,
@@ -21,10 +21,7 @@ const PersonForm = ({
       id: persons.length + 1,
     };
     setPersons(persons.concat(person));
-    axios
-      .post("http://localhost:3001/persons", person)
-      .then((data) => console.log(data));
-
+    personService.createPerson(person).then((data) => console.log(data));
     setNewName("");
     setNewPhone("");
   };
