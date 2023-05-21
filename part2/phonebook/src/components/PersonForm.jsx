@@ -10,18 +10,36 @@ const PersonForm = ({
 }) => {
   const addPerson = (event) => {
     event.preventDefault();
-
-    if (Boolean(persons.filter((person) => newName === person.name).length)) {
-      alert(`${newName} is already added to the Phonebook.`);
+    const existingPersons = persons.filter((person) => newName === person.name);
+    if (Boolean(existingPersons.length)) {
+      const existingPerson = existingPersons[0];
+      if (
+        window.confirm(
+          `${existingPerson.name} is already added to the Phonebook, replace the old number with the new one?`
+        )
+      ) {
+        personService
+          .updatePerson(existingPerson.id, { name: newName, number: newPhone })
+          .then((response) => console.log(response))
+          .catch((error) => console.log(error))
+          .finally(() =>
+            personService.getAll().then((data) => setPersons(data))
+          );
+      }
       return;
     }
     const person = {
       name: newName,
       number: newPhone,
-      id: persons.length + 1,
+      id: persons.slice(-1).id + 1,
     };
-    setPersons(persons.concat(person));
-    personService.createPerson(person).then((data) => console.log(data));
+    personService
+      .createPerson(person)
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error))
+      .finally(() => {
+        personService.getAll().then((data) => setPersons(data));
+      });
     setNewName("");
     setNewPhone("");
   };
