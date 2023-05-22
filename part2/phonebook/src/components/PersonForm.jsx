@@ -32,9 +32,9 @@ const PersonForm = ({
             }, 5000);
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response.data.error)
             setNotificationStatus({
-              message: `Update failed. ${error.message}`,
+              message: `Update failed. ${error.response.data.error}`,
               type: "ERROR",
             });
             setTimeout(() => {
@@ -65,9 +65,9 @@ const PersonForm = ({
         }, 5000);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data.error)
         setNotificationStatus({
-          message: error.message,
+          message: error.response.data.error,
           type: "ERROR",
         });
         setTimeout(() => {
